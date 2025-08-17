@@ -1,0 +1,4 @@
+{
+  "screens": ["accueil.dart", "inscription.dart", "vente.dart", "formation.dart"],
+  "widgets": ["product_card.dart", "custom_button.dart"]
+}
