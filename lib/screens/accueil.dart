@@ -5,7 +5,8 @@ class AccueilGlobalTechnologie extends StatefulWidget {
   const AccueilGlobalTechnologie({super.key});
 
   @override
-  State<AccueilGlobalTechnologie> createState() => _AccueilGlobalTechnologieState();
+  State<AccueilGlobalTechnologie> createState() =>
+      _AccueilGlobalTechnologieState();
 }
 
 class _AccueilGlobalTechnologieState extends State<AccueilGlobalTechnologie>
@@ -31,21 +32,28 @@ class _AccueilGlobalTechnologieState extends State<AccueilGlobalTechnologie>
     required String label,
     required IconData icon,
     required VoidCallback onPressed,
+    required Color color,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: ElevatedButton.icon(
         onPressed: onPressed,
-        icon: Icon(icon),
-        label: Text(label),
+        icon: Icon(icon, color: Colors.white),
+        label: Text(
+          label,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.deepPurple,
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-          textStyle: const TextStyle(fontSize: 18),
+          backgroundColor: color,
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+          elevation: 6,
         ),
       ),
     );
@@ -71,39 +79,36 @@ class _AccueilGlobalTechnologieState extends State<AccueilGlobalTechnologie>
                 const Text(
                   "Bienvenue chez GlobalTechnologie 👋",
                   style: TextStyle(
-                    fontSize: 26,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF00796B),
+                    color: Colors.black,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 16),
                 const Text(
-                  "Explorez nos formations et produits innovants.",
+                  "Votre partenaire numérique de confiance.",
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF00796B),
+                    fontSize: 18,
+                    color: Colors.black87,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 40),
+
+                // 🔹 Boutons
                 buildButton(
-                  label: "Commencer",
-                  icon: Icons.arrow_forward,
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/inscription');
-                  },
-                ),
-                buildButton(
-                  label: "Se connecter",
+                  label: "Connexion",
                   icon: Icons.login,
+                  color: Colors.blue[800]!,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/connexion');
+                    Navigator.pushNamed(context, '/choixConnexion');
                   },
                 ),
                 buildButton(
                   label: "Espace Vente",
                   icon: Icons.shopping_cart,
+                  color: Colors.amber[600]!,
                   onPressed: () {
                     Navigator.pushNamed(context, '/vente');
                   },
@@ -111,6 +116,7 @@ class _AccueilGlobalTechnologieState extends State<AccueilGlobalTechnologie>
                 buildButton(
                   label: "Formation Métier",
                   icon: Icons.school,
+                  color: Colors.red[700]!,
                   onPressed: () {
                     Navigator.pushNamed(context, '/formation');
                   },
@@ -131,27 +137,27 @@ class _AnimatedBackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = const Color(0xFFE0F7FA);
+    final paint = Paint()..color = Colors.blue[50]!; // fond bleu clair
     canvas.drawRect(Offset.zero & size, paint);
 
     final wavePaint = Paint()
-      ..color = const Color(0xFFB2EBF2).withOpacity(0.5)
+      ..color = Colors.blue[300]!.withOpacity(0.3)
       ..style = PaintingStyle.fill;
 
     final path = Path();
-    for (double y = 0; y <= size.height; y += 50) {
+    for (double y = 0; y <= size.height; y += 60) {
       path.moveTo(0, y);
       for (double x = 0; x <= size.width; x += 20) {
-        path.lineTo(x, y + sin((x / 50 + value * 10)) * 10);
+        path.lineTo(x, y + sin((x / 50 + value * 10)) * 12);
       }
     }
     canvas.drawPath(path, wavePaint);
 
-    final orbPaint = Paint()..color = const Color(0xFF80DEEA).withOpacity(0.8);
-    for (int i = 0; i < 20; i++) {
-      final dx = sin(value * 2 * pi + i) * 150 + size.width / 2;
-      final dy = cos(value * 2 * pi + i * 2) * 100 + size.height / 2;
-      canvas.drawCircle(Offset(dx, dy), 6 + sin(value * 10 + i) * 3, orbPaint);
+    final orbPaint = Paint()..color = Colors.blue[200]!.withOpacity(0.6);
+    for (int i = 0; i < 25; i++) {
+      final dx = sin(value * 2 * pi + i) * 180 + size.width / 2;
+      final dy = cos(value * 2 * pi + i * 2) * 120 + size.height / 2;
+      canvas.drawCircle(Offset(dx, dy), 6 + sin(value * 10 + i) * 4, orbPaint);
     }
   }
 

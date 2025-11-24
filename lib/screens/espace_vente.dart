@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+/// 🇫🇷 Écran principal de l’espace vente
+/// 🇬🇧 Main screen for product showcase
 class EspaceVenteProduits extends StatelessWidget {
-  final List<Map<String, String>> produits = [
+  const EspaceVenteProduits({super.key}); // ✅ constructeur bien placé
+
+  final List<Map<String, String>> produits = const [
     {
       'nom': 'Ordinateur Portable',
       'image': 'assets/ordinateur.png',
@@ -38,7 +42,7 @@ class EspaceVenteProduits extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
+        leading: const BackButton(),
         title: const Text("Espace Vente"),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
@@ -139,10 +143,12 @@ class EspaceVenteProduits extends StatelessWidget {
   }
 }
 
+/// 🇫🇷 Écran de détail pour un produit sélectionné
+/// 🇬🇧 Detail screen for selected product
 class DetailPage extends StatelessWidget {
   final Map<String, String> produit;
 
-  const DetailPage({required this.produit});
+  const DetailPage({required this.produit, super.key}); // ✅ Ajout du super.key
 
   @override
   Widget build(BuildContext context) {

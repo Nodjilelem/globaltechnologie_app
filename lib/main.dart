@@ -20,9 +20,14 @@ import 'screens/formation/informatique.dart';
 import 'screens/structure_viewer.dart';
 import 'screens/admin/admin_structure_editor.dart';
 
-// Écran de connexion (à ajouter si pas encore créé)
-import 'screens/connexion_screen.dart'; // 🔑 Assure-toi que ce fichier existe
-import 'screens/product_detail_page.dart';
+// Écran de connexion
+import 'screens/connexion_screen.dart';
+
+// Écran lié au backend
+import 'screens/service_list_screen.dart';
+
+// 🔹 Nouvelle page choix connexion
+import 'screens/choix_connexion.dart';
 
 void main() {
   runApp(const GlobalTechnologieApp());
@@ -44,27 +49,26 @@ class GlobalTechnologieApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const AccueilGlobalTechnologie(),
-
-        // ⛔️ Correction ici : suppression du "const" pour éviter erreur de compilation
+        '/choixConnexion': (context) => const ChoixConnexion(), // 🔹 ajoutée
         '/inscription': (context) => FormulaireInscription(),
         '/connexion': (context) => ConnexionScreen(),
-
-        '/vente': (context) => EspaceVenteProduits(),
-        '/formation': (context) => FormationScreen(),
-        '/dashboard': (context) => const DashboardScreen(),
-
-        // Routes de formation métier
-        '/electricite_batiment': (context) => ElectriciteBatimentScreen(),
-        '/electricite_industrielle': (context) => ElectriciteIndustrielleScreen(),
-        '/electronique': (context) => ElectroniqueScreen(),
-        '/panneaux_solaires': (context) => PanneauxSolairesScreen(),
-        '/antennes_paraboliques': (context) => AntennesParaboliquesScreen(),
-        '/depannage_telephone': (context) => DepannageTelephoneScreen(),
-        '/informatique': (context) => InformatiqueScreen(),
-
-        // Routes structure et admin
-        '/structure': (context) => StructureViewer(),
         '/admin_structure_editor': (context) => AdminStructureEditor(),
+
+        '/vente': (context) => const EspaceVenteProduits(),
+        '/formation': (context) => const FormationScreen(),
+        '/dashboard': (context) => const DashboardScreen(),
+        '/structure': (context) => const StructureViewer(),
+
+        '/electricite_batiment': (context) => const ElectriciteBatimentScreen(),
+        '/electricite_industrielle': (context) => const ElectriciteIndustrielleScreen(),
+        '/electronique': (context) => const ElectroniqueScreen(),
+        '/panneaux_solaires': (context) => const PanneauxSolairesScreen(),
+        '/antennes_paraboliques': (context) => const AntennesParaboliquesScreen(),
+        '/depannage_telephone': (context) => const DepannageTelephoneScreen(),
+        '/informatique': (context) => const InformatiqueScreen(),
+
+        // Nouvelle route pour les services backend
+        '/services': (context) => ServiceListScreen(),
       },
     );
   }

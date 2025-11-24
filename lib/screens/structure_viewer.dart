@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:convert';
 
+/// 🇫🇷 Widget principal pour afficher la structure du projet
+/// 🇬🇧 Main widget to display project structure
 class StructureViewer extends StatefulWidget {
+  const StructureViewer({super.key}); // ✅ constructeur correct
+
   @override
-  _StructureViewerState createState() => _StructureViewerState();
+  State<StructureViewer> createState() => _StructureViewerState(); // ✅ méthode unique
 }
 
 class _StructureViewerState extends State<StructureViewer> {
@@ -13,19 +17,19 @@ class _StructureViewerState extends State<StructureViewer> {
   @override
   void initState() {
     super.initState();
-    structureFuture = loadAppStructure();
+    structureFuture = loadAppStructure(); // ✅ chargement du JSON
   }
 
   Future<Map<String, dynamic>> loadAppStructure() async {
     final String jsonString = await rootBundle.loadString('assets/structure.json');
-    return json.decode(jsonString);
+    return json.decode(jsonString); // ✅ décodage du JSON
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Structure du Projet"),
+        title: const Text("Structure du Projet"),
         backgroundColor: Colors.blueGrey,
         centerTitle: true,
       ),
@@ -33,20 +37,20 @@ class _StructureViewerState extends State<StructureViewer> {
         future: structureFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text("Erreur de chargement"));
+            return const Center(child: Text("Erreur de chargement"));
           } else {
             final screens = snapshot.data!['screens'] as List<dynamic>;
             final widgets = snapshot.data!['widgets'] as List<dynamic>;
 
             return ListView(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               children: [
-                Text("📱 Écrans :", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const Text("📱 Écrans :", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ...screens.map((screen) => ListTile(title: Text(screen))),
-                SizedBox(height: 20),
-                Text("🔧 Widgets :", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 20),
+                const Text("🔧 Widgets :", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ...widgets.map((widgetName) => ListTile(title: Text(widgetName))),
               ],
             );

@@ -12,8 +12,9 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   path_provider: ^2.0.15
-  flutter_launcher_icons: ^0.14.4
   image_picker: ^1.0.4
+  http: ^1.1.0
+  font_awesome_flutter: ^10.4.0  # ✅ pour les icônes Google et Facebook
 
 dev_dependencies:
   flutter_test:
@@ -24,7 +25,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icon tech.png"
+  image_path: "assets/icon_tech.png"
   remove_alpha_ios: true
 
 flutter:
@@ -37,6 +38,7 @@ flutter:
     - assets/batterie.png
     - assets/panneau.png
     - assets/cable.png
+    - assets/structure.json
 
 dependency_overrides:
   characters: ^1.4.1

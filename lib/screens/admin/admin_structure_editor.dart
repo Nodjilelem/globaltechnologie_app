@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
+/// 🇫🇷 Éditeur JSON pour la structure du projet  
+/// 🇬🇧 JSON editor for project structure
 class AdminStructureEditor extends StatefulWidget {
+  const AdminStructureEditor({super.key}); // ✅ constructeur bien placé
+
   @override
-  _AdminStructureEditorState createState() => _AdminStructureEditorState();
+  State<AdminStructureEditor> createState() => _AdminStructureEditorState(); // ✅ méthode unique
 }
 
 class _AdminStructureEditorState extends State<AdminStructureEditor> {
-  TextEditingController _jsonController = TextEditingController();
+  final TextEditingController _jsonController = TextEditingController(); // ✅ final ajouté
 
   @override
   void initState() {
@@ -27,37 +30,39 @@ class _AdminStructureEditorState extends State<AdminStructureEditor> {
     final directory = await getApplicationDocumentsDirectory();
     final file = File('${directory.path}/structure_modified.json');
     await file.writeAsString(_jsonController.text);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("✅ JSON sauvegardé localement")));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("✅ JSON sauvegardé localement")),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("🛠️ Éditeur de Structure"),
+        title: const Text("🛠️ Éditeur de Structure"),
         backgroundColor: Colors.redAccent,
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
             Expanded(
               child: TextField(
                 controller: _jsonController,
                 maxLines: null,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Fichier JSON',
                   alignLabelWithHint: true,
                 ),
-                style: TextStyle(fontFamily: 'monospace', fontSize: 14),
+                style: const TextStyle(fontFamily: 'monospace', fontSize: 14),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             ElevatedButton.icon(
-              icon: Icon(Icons.save),
-              label: Text("Sauvegarder"),
+              icon: const Icon(Icons.save),
+              label: const Text("Sauvegarder"),
               style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
               onPressed: _saveJson,
             ),

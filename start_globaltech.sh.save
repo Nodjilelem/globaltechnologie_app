@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Script pour lancer le backend Node.js et le frontend Flutter en parallèle
+
+# 🔹 Backend
+gnome-terminal -- bash -c "cd ~/Bureau/globaltechnologie_app/backend-globaltech && npm install && npm start; exec bash"
+
+# 🔹 Frontend Flutter (Chrome)
+gnome-terminal -- bash -c "cd ~/Bureau/globaltechnologie_app && flutter pub get && flutter run -d chrome; exec bash"
+
+echo "🚀 Backend et frontend sont en cours de lancement..."

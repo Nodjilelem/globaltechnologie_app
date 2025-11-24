@@ -5,7 +5,7 @@ PROJECT_DIR=~/Bureau/globaltechnologie_app
 
 
 # 📁 Dossier de destination pour l'APK généré
-EXPORT_DIR=~/Bureau/apk_globaltechnologie
+EXPORT_DIR=~/Documents/apk_globaltechnologie
 
 # 🔁 Aller dans le projet
 cd "$PROJECT_DIR" || { echo "❌ Impossible de trouver le projet"; exit 1; }
@@ -32,4 +32,3 @@ if [ -f "$APK_SOURCE" ]; then
 else
   echo "❌ APK non trouvé. Vérifie les erreurs de build."
 fi
-

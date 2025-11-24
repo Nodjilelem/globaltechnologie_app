@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-// Écran pour afficher les détails d’une formation
+/// 🇫🇷 Écran pour afficher les détails d’une formation
+/// 🇬🇧 Screen to display training details
 class FormationDetailScreen extends StatelessWidget {
   final String titre;
   final String description;
@@ -8,16 +9,14 @@ class FormationDetailScreen extends StatelessWidget {
   const FormationDetailScreen({
     required this.titre,
     required this.description,
+    super.key, // ✅ Ajout du paramètre key dans le constructeur
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+        leading: const BackButton(),
         title: Text(titre),
         backgroundColor: Colors.blueAccent,
       ),
@@ -25,16 +24,19 @@ class FormationDetailScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Text(
           description,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
       ),
     );
   }
 }
 
-// Liste des formations
+/// 🇫🇷 Écran principal listant les formations disponibles
+/// 🇬🇧 Main screen listing available trainings
 class FormationScreen extends StatelessWidget {
-  final List<Map<String, String>> formations = [
+  const FormationScreen({super.key}); // ✅ Correction de la déclaration
+
+  final List<Map<String, String>> formations = const [
     {
       "titre": "Électricité bâtiment",
       "description": "Bases et techniques de câblage domestique.",
@@ -69,23 +71,20 @@ class FormationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text("Formations Métiers"),
+        leading: const BackButton(),
+        title: const Text("Formations Métiers"),
         centerTitle: true,
         backgroundColor: Colors.blueAccent,
       ),
       body: ListView.builder(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         itemCount: formations.length,
         itemBuilder: (context, index) {
           final item = formations[index];
           return Card(
             elevation: 5,
             shadowColor: Colors.indigo,
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -93,18 +92,18 @@ class FormationScreen extends StatelessWidget {
                 children: [
                   Text(
                     item["titre"]!,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.indigo,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     item["description"]!,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
@@ -119,14 +118,14 @@ class FormationScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Text("Commencer la formation"),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 25,
                           vertical: 12,
                         ),
                       ),
+                      child: const Text("Commencer la formation"),
                     ),
                   ),
                 ],
