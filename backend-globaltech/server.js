@@ -1,41 +1,68 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-require("dotenv").config();
-
-const userRoute = require("./routes/userRoute");
-const serviceRoute = require("./routes/serviceRoute");
-const formationRoute = require("./routes/formationRoute");
+// backend/server.js
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const morgan = require('morgan');
+const path = require('path');
 
 const app = express();
 
-// 🔹 Middlewares
-app.use(cors());
-app.use(express.json());
+// Middlewares généraux
+app.use(helmet());
+app.use(cors()); // config cors plus fine si nécessaire
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
-// 🔹 Routes
-app.use("/api/users", userRoute);
-app.use("/api/services", serviceRoute);
-app.use("/api/formations", formationRoute);
-
-// 🔹 Route racine
-app.get("/", (req, res) => {
-  res.send("Bienvenue sur l'API GlobalTechnologie !");
+// Rate limiter basique
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200 // limite par IP
 });
+app.use(limiter);
 
-// 🔹 Gestion des erreurs
-app.use((req, res, next) => {
-  res.status(404).json({ message: "Route non trouvée" });
-});
+// Routes (assure-toi que ces fichiers existent)
+app.use('/api/auth', require('./routes/auth.routes'));
+app.use('/api/users', require('./routes/user.routes'));
+app.use('/api/services', require('./routes/service.routes'));
+app.use('/api/formations', require('./routes/formation.routes'));
 
-// 🔹 Connexion MongoDB + démarrage serveur
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("✅ MongoDB connecté");
-    const port = process.env.PORT || 3000;
-    app.listen(port, () => console.log(`🚀 Serveur démarré sur le port ${port}`));
-  })
-  .catch(err => {
-    console.error("❌ Erreur MongoDB :", err);
-    process.exit(1);
+// Route santé (healthcheck) pour Render / monitoring
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
+
+// Serve static (optionnel : si tu builds frontend dans /frontend/build)
+if (process.env.SERVE_FRONTEND === 'true') {
+  const frontendPath = path.join(__dirname, '..', 'frontend', 'build');
+  app.use(express.static(frontendPath));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
   });
+}
+
+// Handler des erreurs simples
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({ message: err.message || 'Erreur serveur' });
+});
+
+// Connexion MongoDB et démarrage du serveur
+const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
+
+mongoose.set('strictQuery', false);
+
+mongoose.connect(MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('MongoDB connecté');
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+})
+.catch(err => {
+  console.error('Erreur connexion MongoDB:', err);
+  process.exit(1);
+});
